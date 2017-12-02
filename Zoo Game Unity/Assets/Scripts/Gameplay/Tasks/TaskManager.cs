@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour {
 
-	public Task[] availableTasks;
+	public Task[] tasks;
 	public List<Task> currentTasks = new List<Task>();
 
 	public float taskSpawnRate = 30f;
@@ -21,14 +21,13 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	public void SpawnTask(){
-		Task newTask = GetRandomTask();
-		if(newTask != null){
-			currentTasks.Add(newTask);
-			lastSpawnTime = Time.time;
+		Task newTask = null;
+		List<Task> availableTasks = new List<Task>();
+		foreach(Task task in tasks){
+			if(!currentTasks.Contains(task)){
+				availableTasks.Add(task);
+			}
 		}
-	}
-
-	public Task GetRandomTask(){
 		float totalSpawnChange = 0f;
 		foreach(Task task in availableTasks){
 			totalSpawnChange += task.spawnChance;
@@ -39,18 +38,27 @@ public class TaskManager : MonoBehaviour {
 		foreach(Task task in availableTasks){
 			totalSpawnChange2 += task.spawnChance;
 			if(totalSpawnChange2 > totalSpawnChange){
-				return task;
+				newTask = task;
+				break;
 			}
 		}
-		return null;
+		if(newTask != null){
+			newTask.subTasksDone = new bool[newTask.subTasks.Length];
+			GameObject spawned = Instantiate(newTask.taskScriptPrefab);
+			GenericTask taskScript = spawned.GetComponent<GenericTask>();
+			taskScript.myTask = newTask;
+			currentTasks.Add(newTask);
+			lastSpawnTime = Time.time;
+		}
 	}
 }
 
 [System.Serializable]
 public class Task{
 	public enum TaskType { MONKEY_SHIT }
+	public GameObject taskScriptPrefab;
 	public TaskType taskType;
 	public float spawnChance = 1f;
 	public string[] subTasks;
-	public bool[] tasksDone;
+	public bool[] subTasksDone;
 }
