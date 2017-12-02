@@ -18,11 +18,11 @@ public class ClickManager : MonoBehaviour {
 		}
 		if(clickScript != prevClickScript){
 			if(prevClickScript != null){
-				prevClickScript.FireUnClick();
+				prevClickScript.FireUnClick(Input.GetMouseButtonUp(0));
 				prevClickScript = null;
 			}
 			if(clickScript != null){
-				clickScript.FireClick();
+				clickScript.FireClick(Input.GetMouseButtonDown(0));
 				prevClickScript = clickScript;
 			}
 		}

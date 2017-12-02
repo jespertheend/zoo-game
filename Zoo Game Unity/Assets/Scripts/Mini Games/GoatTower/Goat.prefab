@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4337506887932976}
   - component: {fileID: 212010440855245960}
+  - component: {fileID: 61101381053864056}
+  - component: {fileID: 114125167959766120}
   m_Layer: 0
   m_Name: GoatSprite
   m_TagString: Untagged
@@ -70,6 +72,44 @@ Transform:
   m_Father: {fileID: 4055176788382022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61101381053864056
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300067120704710}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.16, y: 0.16}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.16}
+  m_EdgeRadius: 0
+--- !u!114 &114125167959766120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300067120704710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e50065b3cc4e4330a552c27b326ad4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBottomGoat: 0
+  goatScript: {fileID: 114544648612099936}
 --- !u!114 &114544648612099936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6629fb4dac86543249b433a12477ea4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swipeScript: {fileID: 114125167959766120}
 --- !u!212 &212010440855245960
 SpriteRenderer:
   m_ObjectHideFlags: 1

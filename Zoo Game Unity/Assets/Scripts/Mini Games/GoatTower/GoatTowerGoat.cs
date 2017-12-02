@@ -5,6 +5,8 @@ using UnityEngine;
 public class GoatTowerGoat : MonoBehaviour {
 
 	int animState = 0;
+	public GoatTowerSwipeable swipeScript;
+	float yTarget = 0f;
 
 	Transform spriteTrans;
 
@@ -31,14 +33,25 @@ public class GoatTowerGoat : MonoBehaviour {
 			float maxHeight = GoatTower.self.towerHeight * 0.7f;
 			if(pos.y > maxHeight){
 				pos.x = 0f;
-				pos.y = maxHeight;
 				transform.rotation = Quaternion.identity;
 				spriteTrans.localPosition = Vector3.zero;
 				animState++;
 				GoatTower.self.AddGoatToTower(this);
 			}
 		}
+		if(animState == 2){
+			pos = Vector3.Lerp(pos, Vector3.up * yTarget, 0.1f);
+		}
 
 		transform.position = pos;
+	}
+
+	public void RemoveFromTower(){
+		GoatTower.self.RemoveGoat(this);
+		Destroy(gameObject);
+	}
+
+	public void SetTowerYPosition(float y){
+		yTarget = y;
 	}
 }

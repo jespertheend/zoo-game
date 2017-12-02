@@ -36,5 +36,23 @@ public class GoatTower : MonoBehaviour {
 
 	public void AddGoatToTower(GoatTowerGoat goat){
 		goatsInTower.Add(goat);
+		if(goatsInTower.Count == 1){
+			goat.swipeScript.isBottomGoat = true;
+		}
+		SetTowerGoatPositions();
+	}
+
+	public void RemoveGoat(GoatTowerGoat goat){
+		goatsInTower.Remove(goat);
+		if(goatsInTower.Count > 0){
+			goatsInTower[0].swipeScript.isBottomGoat = true;
+		}
+		SetTowerGoatPositions();
+	}
+
+	void SetTowerGoatPositions(){
+		for(int i=0; i < goatsInTower.Count; i++){
+			goatsInTower[i].SetTowerYPosition(i * 0.7f);
+		}
 	}
 }
