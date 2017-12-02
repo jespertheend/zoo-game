@@ -7,7 +7,7 @@ public class Thrower : MonoBehaviour {
     float timer;
 
     public float intervalOffset = 0f;
-    public float interval = 2f;
+    public float interval = 1.5f;
 
     public List<Sprite> sprites = new List<Sprite>();
 
@@ -21,7 +21,7 @@ public class Thrower : MonoBehaviour {
 
         if (timer >= interval)
         {
-            SpawnProjectile(sprites[0]);
+			SpawnProjectile(sprites[Random.Range(0, sprites.Count)]);
 
             timer -= interval;
         }
@@ -36,8 +36,15 @@ public class Thrower : MonoBehaviour {
         projectile.transform.position = transform.position;
         projectile.AddComponent<Projectile>();
         var renderer = projectile.AddComponent<SpriteRenderer>();
+		var collision = projectile.AddComponent<BoxCollider2D>();
+
+		projectile.name = "Poop";
+
+		//projectile.AddComponent<Rigidbody2D>();
+
+		collision.size = new Vector2(0.16f, 0.16f);
+		collision.enabled = false;
 
         renderer.sprite = sprite;
-        renderer.color = Color.blue;
     }
 }

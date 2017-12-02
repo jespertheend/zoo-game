@@ -16,12 +16,19 @@ public class Projectile : MonoBehaviour {
     float duration;
     float timer = 0f;
 
+	float turnSpeed;
+
+	float alpha = 1f;
+
+	bool hit = false;
+
     // Use this for initialization
     void Start () {
 
-        //Setting it's starting position and scale
+        //Setting it's starting transform
         startPosition = transform.position;
         transform.localScale = new Vector2(beginSize, beginSize);
+		transform.eulerAngles = new Vector3(0f, 0f, Random.Range(-180f, 180f));
 
         //Determining the hit goal, 50/50 for either random, or on the players current position
         if (Random.Range(0f, 1f) > 0.5f)
@@ -40,6 +47,7 @@ public class Projectile : MonoBehaviour {
 
         //Determining the speed of the projectile
         duration = Random.Range(minDuration, maxDuration);
+		turnSpeed = Random.Range(-90f, 90f);
     }
 	
 
@@ -60,6 +68,34 @@ public class Projectile : MonoBehaviour {
         transform.localScale = new Vector2(newScale, newScale);
 
         timer += Time.deltaTime;
+
+		if (timer > duration)
+		{
+			if (alpha < 0f)
+			{
+				Destroy(gameObject);
+			}
+
+			alpha -= Time.deltaTime * 2f;
+			Color c = new Color(1f, 1f, 1f, alpha);
+
+			GetComponent<SpriteRenderer>().color = c;
+
+			if (hit == false)
+			{
+				GetComponent<BoxCollider2D>().enabled = true;
+
+				hit = true;
+			}
+			else
+			{
+				GetComponent<BoxCollider2D>().enabled = false;
+			}
+		}
+		else
+		{
+			transform.eulerAngles += new Vector3(0f, 0f, turnSpeed * Time.deltaTime);
+		}
 	}
 
     public void Initialize(float startSize, float endSize, float minimumDuration, float maximumDuration)
@@ -70,4 +106,13 @@ public class Projectile : MonoBehaviour {
         minDuration = minimumDuration;
         maxDuration = maximumDuration;
     }
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		Player player = collision.collider.gameObject.GetComponent<Player>();
+		if (player != null)
+		{
+			player.Hit();
+		}
+	}
 }
