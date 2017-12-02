@@ -9,7 +9,11 @@
 			"path": "."
 		},
 		{
-			"path": "Zoo Game Unity/Assets/Scripts"
+			"path": "Zoo Game Unity/Assets/Scripts",
+			"file_exclude_patterns":
+			[
+				"*.meta"
+			]
 		}
 	]
 }

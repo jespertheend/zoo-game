@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericTask : MonoBehaviour {
+public abstract class GenericTask : MonoBehaviour {
 
 	public Task myTask;
+
+	public virtual void OnTaskCreated(){}
 }
