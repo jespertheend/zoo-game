@@ -2,11 +2,14 @@
 	"folders":
 	[
 		{
-			"path": ".",
 			"folder_exclude_patterns":
 			[
 				"Zoo Game Unity"
-			]
+			],
+			"path": "."
+		},
+		{
+			"path": "Zoo Game Unity"
 		}
 	]
 }
