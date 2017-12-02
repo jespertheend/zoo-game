@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class TaskMonkeyShit : GenericTask {
 
+	public override void OnTaskCreated(){
 
+	}
 }
