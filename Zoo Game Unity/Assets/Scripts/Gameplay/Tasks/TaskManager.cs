@@ -10,6 +10,11 @@ public class TaskManager : MonoBehaviour {
 	public float taskSpawnRate = 30f;
 	float lastSpawnTime;
 
+	static public TaskManager self;
+	void Awake(){
+		self = this;
+	}
+
 	void Start(){
 		SpawnTask();
 	}
@@ -44,11 +49,23 @@ public class TaskManager : MonoBehaviour {
 		}
 		if(newTask != null){
 			newTask.subTasksDone = new bool[newTask.subTasks.Length];
-			GameObject spawned = Instantiate(newTask.taskScriptPrefab);
-			GenericTask taskScript = spawned.GetComponent<GenericTask>();
-			taskScript.myTask = newTask;
+			newTask.taskScript.myTask = newTask;
+			newTask.taskScript.OnTaskCreated();
 			currentTasks.Add(newTask);
 			lastSpawnTime = Time.time;
+		}
+	}
+
+	public IEnumerable<string> GetTaskStrings(){
+		foreach(Task task in currentTasks){
+			for(int i=0; i < task.subTasks.Length; i++){
+				string str = task.subTasks[i];
+				bool done = task.subTasksDone[i];
+				if(done){
+
+				}
+				yield return str;
+			}
 		}
 	}
 }
@@ -56,7 +73,7 @@ public class TaskManager : MonoBehaviour {
 [System.Serializable]
 public class Task{
 	public enum TaskType { MONKEY_SHIT }
-	public GameObject taskScriptPrefab;
+	public GenericTask taskScript;
 	public TaskType taskType;
 	public float spawnChance = 1f;
 	public string[] subTasks;

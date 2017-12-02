@@ -4,5 +4,17 @@ using UnityEngine;
 
 public class GenericClickableObject : MonoBehaviour {
 
-	public virtual void OnClick(){}
+	public bool isClicking {get; private set;}
+	public virtual void OnClick(bool cameFromOnDown){}
+	public virtual void OnRelease(bool cameFromOnUp){}
+
+	public void FireClick(bool cameFromOnDown){
+		isClicking = true;
+		OnClick(cameFromOnDown);
+	}
+
+	public void FireUnClick(bool cameFromOnUp){
+		isClicking = false;
+		OnRelease(cameFromOnUp);
+	}
 }

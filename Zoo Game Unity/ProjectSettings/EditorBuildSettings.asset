@@ -4,4 +4,13 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Overworld.unity
+    guid: f2a0482b013c343749be9d5ecaf1c448
+  - enabled: 1
+    path: Assets/Scripts/Mini Games/Dodge/Dodge Scene.unity
+    guid: 9f66fe859cef7f542a1357ddc72b71cd
+  - enabled: 1
+    path: Assets/Scripts/Mini Games/GoatTower/GoatTower.unity
+    guid: 1ebbcd54942ca42f7aef96ab8f82be9b
