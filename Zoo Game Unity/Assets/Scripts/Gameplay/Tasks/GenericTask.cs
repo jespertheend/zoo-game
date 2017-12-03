@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class GenericTask : MonoBehaviour {
 
-	public Task myTask;
+	public Task myTask = null;
 
 	public virtual void OnTaskCreated(){}
 
