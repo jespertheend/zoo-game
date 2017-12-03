@@ -229,9 +229,6 @@ GameObject:
   - component: {fileID: 608797810}
   - component: {fileID: 608797812}
   - component: {fileID: 608797813}
-  - component: {fileID: 608797814}
-  - component: {fileID: 608797815}
-  - component: {fileID: 608797816}
   m_Layer: 0
   m_Name: globalScripts
   m_TagString: Untagged
@@ -286,72 +283,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tasks:
-  - taskScript: {fileID: 608797814}
+  - taskScriptName: taskMonkeyShit
     spawnChance: 1
     subTasks:
     - Stop monkey from throwing shit
     subTasksDone: 
-  - taskScript: {fileID: 608797815}
+  - taskScriptName: taskGoatEscape
     spawnChance: 1
     subTasks:
     - Stop goats from escaping
     subTasksDone: 
-  - taskScript: {fileID: 608797816}
+  - taskScriptName: taskLionFeed
     spawnChance: 1
     subTasks:
     - Feed the Lions
     subTasksDone: 
   currentTasks: []
   taskSpawnRate: 30
---- !u!114 &608797814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 608797809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e79d626af05574f34b8cf2b857281595, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTask:
-    taskScript: {fileID: 0}
-    spawnChance: 1
-    subTasks:
-    - 
-    subTasksDone: 
---- !u!114 &608797815
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 608797809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8eb53aa944a427bbec3b734a4fa7da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTask:
-    taskScript: {fileID: 0}
-    spawnChance: 1
-    subTasks: []
-    subTasksDone: 
---- !u!114 &608797816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 608797809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 450e8fff88aab4da3ba60f7e88a62edf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myTask:
-    taskScript: {fileID: 0}
-    spawnChance: 1
-    subTasks: []
-    subTasksDone: 
 --- !u!1 &714484915
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class TaskMonkeyShit : GenericTask {
 
-	public override void OnTaskCreated(){
-		SetColliderEnabled(true);
-	}
+	public GameObject miniGameTriggerObject;
 
-	void SetColliderEnabled(bool e){
-		GameObject.Find("dodgeMiniGameTrigger").GetComponent<Collider2D>().enabled = e;
+	public override void OnTaskCreated(){
+		miniGameTriggerObject.SetActive(true);
 	}
 }
