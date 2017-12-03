@@ -26,6 +26,7 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	public void SpawnTask(){
+		TaskListUI.self.SetTexts();
 		Task newTask = null;
 		List<Task> availableTasks = new List<Task>();
 		foreach(Task task in tasks){
@@ -54,6 +55,7 @@ public class TaskManager : MonoBehaviour {
 			currentTasks.Add(newTask);
 			lastSpawnTime = Time.time;
 		}
+		TaskListUI.self.ShowUpdate();
 	}
 
 	public IEnumerable<string> GetTaskStrings(){

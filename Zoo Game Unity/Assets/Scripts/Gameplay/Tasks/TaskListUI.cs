@@ -11,13 +11,32 @@ public class TaskListUI : MonoBehaviour {
 	public Color textColorDone;
 	public Font font;
 
+	bool isShowingUpdate = false;
+	bool didShowUpdateSetText = false;
+	float showUpdateTimer;
+
 	float animationTime = 0f;
+
+	static public TaskListUI self {get; private set;}
+	void Awake(){
+		self = this;
+	}
 
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.Tab)){
 			SetTexts();
 		}
-		if(Input.GetKey(KeyCode.Tab)){
+		if(isShowingUpdate){
+			showUpdateTimer += Time.deltaTime;
+			if(showUpdateTimer > 0.5f && !didShowUpdateSetText){
+				SetTexts();
+				didShowUpdateSetText = true;
+			}
+			if(showUpdateTimer > 1f){
+				isShowingUpdate = false;
+			}
+		}
+		if(Input.GetKey(KeyCode.Tab) || isShowingUpdate){
 			animationTime += Time.deltaTime * animationSpeed;
 		}else{
 			animationTime -= Time.deltaTime * animationSpeed;
@@ -29,7 +48,7 @@ public class TaskListUI : MonoBehaviour {
 		listRect.anchoredPosition = Vector2.left * (t * w - w);
 	}
 
-	void SetTexts(){
+	public void SetTexts(){
 		foreach(Transform child in listRect){
 			Destroy(child.gameObject);
 		}
@@ -52,5 +71,11 @@ public class TaskListUI : MonoBehaviour {
 			text.supportRichText = true;
 		}
 		TaskManager.self.ClearOldTasks();
+	}
+
+	public void ShowUpdate(){
+		isShowingUpdate = true;
+		didShowUpdateSetText = false;
+		showUpdateTimer = 0f;
 	}
 }
