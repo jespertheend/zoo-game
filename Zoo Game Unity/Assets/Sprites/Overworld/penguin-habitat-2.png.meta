@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c3d795e603f62ee4087a581d95224281
-timeCreated: 1512294073
+guid: b563acecffe12a64faf7bb5f144fae77
+timeCreated: 1512298446
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -81,5 +81,5 @@ TextureImporter:
     physicsShape: []
   spritePackingTag: 
   userData: 
-  assetBundleName: 
+  assetBundleName: penguin animation
   assetBundleVariant: 
