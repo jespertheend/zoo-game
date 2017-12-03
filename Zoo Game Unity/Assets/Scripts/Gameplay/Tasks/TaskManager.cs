@@ -54,12 +54,17 @@ public class TaskManager : MonoBehaviour {
 		}
 		if(newTask != null){
 			newTask.subTasksDone = new bool[newTask.subTasks.Length];
-			newTask.taskScript.myTask = newTask;
-			newTask.taskScript.OnTaskCreated();
-			currentTasks.Add(newTask);
-			spawnTimer = 0f;
+			GameObject obj = GameObject.Find(newTask.taskScriptName);
+			if(obj != null){
+				GenericTask taskScript = obj.GetComponent<GenericTask>();
+				if(taskScript != null){
+					taskScript.OnTaskCreated();
+					currentTasks.Add(newTask);
+					spawnTimer = 0f;
+					TaskListUI.self.ShowUpdate();
+				}
+			}
 		}
-		TaskListUI.self.ShowUpdate();
 	}
 
 	public IEnumerable<string> GetTaskStrings(){
@@ -94,7 +99,7 @@ public class TaskManager : MonoBehaviour {
 
 [System.Serializable]
 public class Task{
-	public GenericTask taskScript;
+	public string taskScriptName;
 	public float spawnChance = 1f;
 	public string[] subTasks;
 	public bool[] subTasksDone;
