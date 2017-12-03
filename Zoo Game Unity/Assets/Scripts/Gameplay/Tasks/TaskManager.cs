@@ -62,9 +62,25 @@ public class TaskManager : MonoBehaviour {
 				string str = task.subTasks[i];
 				bool done = task.subTasksDone[i];
 				if(done){
-
+					str += "[done]";
 				}
 				yield return str;
+			}
+		}
+	}
+
+	public void ClearOldTasks(){
+		for(int i = currentTasks.Count - 1; i >= 0; i--){
+			Task task = currentTasks[i];
+			bool allDone = true;
+			foreach(bool subTask in task.subTasksDone){
+				if(!subTask){
+					allDone = false;
+					break;
+				}
+			}
+			if(allDone){
+				currentTasks.Remove(task);
 			}
 		}
 	}
@@ -72,9 +88,7 @@ public class TaskManager : MonoBehaviour {
 
 [System.Serializable]
 public class Task{
-	public enum TaskType { MONKEY_SHIT }
 	public GenericTask taskScript;
-	public TaskType taskType;
 	public float spawnChance = 1f;
 	public string[] subTasks;
 	public bool[] subTasksDone;

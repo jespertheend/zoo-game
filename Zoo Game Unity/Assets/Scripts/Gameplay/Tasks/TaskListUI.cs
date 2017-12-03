@@ -8,6 +8,7 @@ public class TaskListUI : MonoBehaviour {
 	public RectTransform listRect;
 	public float animationSpeed = 1f;
 	public Color textColor;
+	public Color textColorDone;
 	public Font font;
 
 	float animationTime = 0f;
@@ -33,17 +34,23 @@ public class TaskListUI : MonoBehaviour {
 			Destroy(child.gameObject);
 		}
 		foreach(string item in TaskManager.self.GetTaskStrings()){
+			string itemText = item;
+			bool done = itemText.EndsWith("[done]");
+			if(done){
+				itemText = itemText.Substring(0, itemText.Length - 6);
+			}
 			GameObject spawned = new GameObject("list item");
 			spawned.transform.parent = listRect;
 			RectTransform rect = spawned.AddComponent<RectTransform>();
 			rect.sizeDelta = new Vector2(0f, 50f);
 			spawned.transform.localScale = Vector3.one;
 			Text text = spawned.AddComponent<Text>();
-			text.text = item;
-			text.color = textColor;
+			text.text = itemText;
+			text.color = done ? textColorDone : textColor;
 			text.resizeTextForBestFit = true;
 			text.font = font;
 			text.supportRichText = true;
 		}
+		TaskManager.self.ClearOldTasks();
 	}
 }
