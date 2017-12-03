@@ -11,7 +11,10 @@ public class OverworldCamera : MonoBehaviour {
 	void Update(){
 		Vector3 newPos = transform.position;
 		newPos = Vector3.Lerp(newPos, character.transform.position, cameraSmoothFactor);
-		newPos.z = -10f;
+		newPos.z = -20f;
+
+		newPos.x = Mathf.Clamp(newPos.x, -2.9f, 2.88f);
+		newPos.y = Mathf.Clamp(newPos.y, -1f, 1f);
 		transform.position = newPos;
 	}
 }
