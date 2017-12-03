@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class TaskManager : MonoBehaviour {
 	public List<Task> currentTasks = new List<Task>();
 
 	public float taskSpawnRate = 30f;
-	float lastSpawnTime;
+	float spawnTimer;
 
 	static public TaskManager self;
 	void Awake(){
@@ -20,8 +21,11 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Time.time - lastSpawnTime > taskSpawnRate){
-			SpawnTask();
+		if(SceneManager.GetActiveScene().name == "Overworld"){
+			spawnTimer += Time.deltaTime;
+			if(spawnTimer > taskSpawnRate){
+				SpawnTask();
+			}
 		}
 	}
 
@@ -53,7 +57,7 @@ public class TaskManager : MonoBehaviour {
 			newTask.taskScript.myTask = newTask;
 			newTask.taskScript.OnTaskCreated();
 			currentTasks.Add(newTask);
-			lastSpawnTime = Time.time;
+			spawnTimer = 0f;
 		}
 		TaskListUI.self.ShowUpdate();
 	}
