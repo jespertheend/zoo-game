@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoatTower : MonoBehaviour {
 
 	public GameObject goatPrefab;
 	public float spawnFrequency = 3f;
+	public int initialGoats = 4;
 	float lastSpawnTime;
 	public int towerHeight{
 		get{
 			return goatsInTower.Count;
 		}
 	}
+	bool finishedMinigame = false;
 	List<GoatTowerGoat> goatsInTower = new List<GoatTowerGoat>();
+	List<GoatTowerGoat> spawnedGoats = new List<GoatTowerGoat>();
 
 	static public GoatTower self {get; private set;}
 	void Awake(){
@@ -21,17 +25,24 @@ public class GoatTower : MonoBehaviour {
 
 	void Start(){
 		SpawnGoat();
+		for(int i=0; i < initialGoats; i++){
+			GoatTowerGoat goat = SpawnGoat();
+			goat.InstantTower();
+		}
 	}
 
 	void Update(){
-		if(Time.time - lastSpawnTime > spawnFrequency){
+		if(Time.time - lastSpawnTime > spawnFrequency && !finishedMinigame){
 			SpawnGoat();
 		}
 	}
 
-	void SpawnGoat(){
+	GoatTowerGoat SpawnGoat(){
 		lastSpawnTime = Time.time;
-		Instantiate(goatPrefab);
+		GameObject spawned = Instantiate(goatPrefab);
+		GoatTowerGoat script = spawned.GetComponent<GoatTowerGoat>();
+		spawnedGoats.Add(script);
+		return script;
 	}
 
 	public void AddGoatToTower(GoatTowerGoat goat){
@@ -48,6 +59,20 @@ public class GoatTower : MonoBehaviour {
 			goatsInTower[0].swipeScript.isBottomGoat = true;
 		}
 		SetTowerGoatPositions();
+
+		if(goatsInTower.Count == 0){
+			TaskManager.self.GetComponent<TaskGoatEscape>().MarkTaskAsDone();
+			finishedMinigame = true;
+			foreach(GoatTowerGoat goatScript in spawnedGoats){
+				Destroy(goatScript);
+			}
+			StartCoroutine(ToOverworld());
+		}
+	}
+
+	IEnumerator ToOverworld(){
+		yield return new WaitForSeconds(1f);
+		SceneManager.LoadScene("Overworld");
 	}
 
 	void SetTowerGoatPositions(){

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TaskManager : MonoBehaviour {
 
@@ -8,7 +9,7 @@ public class TaskManager : MonoBehaviour {
 	public List<Task> currentTasks = new List<Task>();
 
 	public float taskSpawnRate = 30f;
-	float lastSpawnTime;
+	float spawnTimer;
 
 	static public TaskManager self;
 	void Awake(){
@@ -20,12 +21,16 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Time.time - lastSpawnTime > taskSpawnRate){
-			SpawnTask();
+		if(SceneManager.GetActiveScene().name == "Overworld"){
+			spawnTimer += Time.deltaTime;
+			if(spawnTimer > taskSpawnRate){
+				SpawnTask();
+			}
 		}
 	}
 
 	public void SpawnTask(){
+		TaskListUI.self.SetTexts();
 		Task newTask = null;
 		List<Task> availableTasks = new List<Task>();
 		foreach(Task task in tasks){
@@ -52,8 +57,9 @@ public class TaskManager : MonoBehaviour {
 			newTask.taskScript.myTask = newTask;
 			newTask.taskScript.OnTaskCreated();
 			currentTasks.Add(newTask);
-			lastSpawnTime = Time.time;
+			spawnTimer = 0f;
 		}
+		TaskListUI.self.ShowUpdate();
 	}
 
 	public IEnumerable<string> GetTaskStrings(){
@@ -62,9 +68,25 @@ public class TaskManager : MonoBehaviour {
 				string str = task.subTasks[i];
 				bool done = task.subTasksDone[i];
 				if(done){
-
+					str += "[done]";
 				}
 				yield return str;
+			}
+		}
+	}
+
+	public void ClearOldTasks(){
+		for(int i = currentTasks.Count - 1; i >= 0; i--){
+			Task task = currentTasks[i];
+			bool allDone = true;
+			foreach(bool subTask in task.subTasksDone){
+				if(!subTask){
+					allDone = false;
+					break;
+				}
+			}
+			if(allDone){
+				currentTasks.Remove(task);
 			}
 		}
 	}
@@ -72,9 +94,7 @@ public class TaskManager : MonoBehaviour {
 
 [System.Serializable]
 public class Task{
-	public enum TaskType { MONKEY_SHIT }
 	public GenericTask taskScript;
-	public TaskType taskType;
 	public float spawnChance = 1f;
 	public string[] subTasks;
 	public bool[] subTasksDone;

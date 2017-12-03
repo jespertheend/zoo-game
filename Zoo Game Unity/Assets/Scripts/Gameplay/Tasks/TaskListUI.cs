@@ -8,15 +8,35 @@ public class TaskListUI : MonoBehaviour {
 	public RectTransform listRect;
 	public float animationSpeed = 1f;
 	public Color textColor;
+	public Color textColorDone;
 	public Font font;
 
+	bool isShowingUpdate = false;
+	bool didShowUpdateSetText = false;
+	float showUpdateTimer;
+
 	float animationTime = 0f;
+
+	static public TaskListUI self {get; private set;}
+	void Awake(){
+		self = this;
+	}
 
 	void Update(){
 		if(Input.GetKeyDown(KeyCode.Tab)){
 			SetTexts();
 		}
-		if(Input.GetKey(KeyCode.Tab)){
+		if(isShowingUpdate){
+			showUpdateTimer += Time.deltaTime;
+			if(showUpdateTimer > 0.5f && !didShowUpdateSetText){
+				SetTexts();
+				didShowUpdateSetText = true;
+			}
+			if(showUpdateTimer > 1f){
+				isShowingUpdate = false;
+			}
+		}
+		if(Input.GetKey(KeyCode.Tab) || isShowingUpdate){
 			animationTime += Time.deltaTime * animationSpeed;
 		}else{
 			animationTime -= Time.deltaTime * animationSpeed;
@@ -28,22 +48,34 @@ public class TaskListUI : MonoBehaviour {
 		listRect.anchoredPosition = Vector2.left * (t * w - w);
 	}
 
-	void SetTexts(){
+	public void SetTexts(){
 		foreach(Transform child in listRect){
 			Destroy(child.gameObject);
 		}
 		foreach(string item in TaskManager.self.GetTaskStrings()){
+			string itemText = item;
+			bool done = itemText.EndsWith("[done]");
+			if(done){
+				itemText = itemText.Substring(0, itemText.Length - 6);
+			}
 			GameObject spawned = new GameObject("list item");
 			spawned.transform.parent = listRect;
 			RectTransform rect = spawned.AddComponent<RectTransform>();
 			rect.sizeDelta = new Vector2(0f, 50f);
 			spawned.transform.localScale = Vector3.one;
 			Text text = spawned.AddComponent<Text>();
-			text.text = item;
-			text.color = textColor;
+			text.text = itemText;
+			text.color = done ? textColorDone : textColor;
 			text.resizeTextForBestFit = true;
 			text.font = font;
 			text.supportRichText = true;
 		}
+		TaskManager.self.ClearOldTasks();
+	}
+
+	public void ShowUpdate(){
+		isShowingUpdate = true;
+		didShowUpdateSetText = false;
+		showUpdateTimer = 0f;
 	}
 }

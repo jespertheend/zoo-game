@@ -19,14 +19,13 @@ public class Player : MonoBehaviour {
 
 	SpriteRenderer child;
 
-	Vector2 childStartScale;
 
 	float timer;
 	public float duration = 0.75f;
 
 	public float scaleDif = 0.1f;
 	public float posDif = 0.5f;
-	
+
 	float hitTimer = 0f;
 
 	Collider2D col;
@@ -38,12 +37,11 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		child = GetComponentInChildren<SpriteRenderer>();
-		childStartScale = child.gameObject.transform.localScale;
 		col = GetComponent<Collider2D>();
 	}
-	
+
 	// Update is called once per frame
-	void Update () { 
+	void Update () {
 		if (goal < 0f)
 		{
 			//End minigame code here
@@ -76,16 +74,16 @@ public class Player : MonoBehaviour {
 		}
 
 		col.enabled = true;
-		
+
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         mousePos.x = Mathf.Clamp(mousePos.x, -6.5f, 6.5f);
         mousePos.y = Mathf.Clamp(mousePos.y, -1.5f, 0.85f);
-		
+
         transform.up = -(new Vector2(0f - mousePos.x, -20f - mousePos.y).normalized);
 
 		Vector3 pos = mousePos;
-		
+
 		transform.position = pos + transform.up * Mathf.Lerp(0f, posDif, timer/duration);
 
 		transform.localScale = (1 - Mathf.Lerp(0f, scaleDif, timer / duration)) * new Vector2(1f, 1f);
