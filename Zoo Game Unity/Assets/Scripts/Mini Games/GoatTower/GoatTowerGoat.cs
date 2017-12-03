@@ -32,11 +32,7 @@ public class GoatTowerGoat : MonoBehaviour {
 			pos.y += Time.deltaTime * 3f;
 			float maxHeight = GoatTower.self.towerHeight * 0.7f;
 			if(pos.y > maxHeight){
-				pos.x = 0f;
-				transform.rotation = Quaternion.identity;
-				spriteTrans.localPosition = Vector3.zero;
-				animState++;
-				GoatTower.self.AddGoatToTower(this);
+				AddToTower();
 			}
 		}
 		if(animState == 2){
@@ -53,5 +49,17 @@ public class GoatTowerGoat : MonoBehaviour {
 
 	public void SetTowerYPosition(float y){
 		yTarget = y;
+	}
+
+	public void InstantTower(){
+		AddToTower();
+		transform.position = Vector3.up * yTarget;
+	}
+
+	void AddToTower(){
+		transform.rotation = Quaternion.identity;
+		spriteTrans.localPosition = Vector3.zero;
+		animState = 2;
+		GoatTower.self.AddGoatToTower(this);
 	}
 }

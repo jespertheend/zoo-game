@@ -6,6 +6,7 @@ public class GoatTower : MonoBehaviour {
 
 	public GameObject goatPrefab;
 	public float spawnFrequency = 3f;
+	public int initialGoats = 4;
 	float lastSpawnTime;
 	public int towerHeight{
 		get{
@@ -21,6 +22,11 @@ public class GoatTower : MonoBehaviour {
 
 	void Start(){
 		SpawnGoat();
+		for(int i=0; i < initialGoats; i++){
+			GameObject spawned = SpawnGoat();
+			GoatTowerGoat goat = spawned.GetComponent<GoatTowerGoat>();
+			goat.InstantTower();
+		}
 	}
 
 	void Update(){
@@ -29,9 +35,9 @@ public class GoatTower : MonoBehaviour {
 		}
 	}
 
-	void SpawnGoat(){
+	GameObject SpawnGoat(){
 		lastSpawnTime = Time.time;
-		Instantiate(goatPrefab);
+		return Instantiate(goatPrefab);
 	}
 
 	public void AddGoatToTower(GoatTowerGoat goat){
