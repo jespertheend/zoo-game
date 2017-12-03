@@ -918,6 +918,7 @@ GameObject:
   - component: {fileID: 961539316}
   - component: {fileID: 961539320}
   - component: {fileID: 961539319}
+  - component: {fileID: 961539321}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -936,6 +937,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5854db44b2240e89e3bc15ef8c8e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 961539317}
+  changeSpriteScript: {fileID: 961539321}
   maxWalkForce: 50
   walkForceMultiplier: 60
 --- !u!212 &961539317
@@ -972,7 +975,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 2d53aaaf74a16452ba160b69a44806ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1030,6 +1033,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &961539321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 961539315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8273562f04f19f94898915ced17b24de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 0.2
+  sprites:
+  - {fileID: 21300000, guid: 2d53aaaf74a16452ba160b69a44806ea, type: 3}
+  - {fileID: 21300000, guid: c1fb6350bf07f41839bb95828e4b3919, type: 3}
 --- !u!1 &997732222
 GameObject:
   m_ObjectHideFlags: 0
