@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -44,7 +45,8 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if (goal < 0f)
 		{
-			//End minigame code here
+			TaskManager.self.GetComponent<TaskMonkeyShit>().MarkTaskAsDone();
+			SceneManager.LoadScene("Overworld");
 		}
 
 		background.position = Vector2.Lerp(new Vector2(0f, -7.5f), new Vector2(0f, 0f), goal / 20f);
@@ -75,12 +77,12 @@ public class Player : MonoBehaviour {
 
 		col.enabled = true;
 
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        mousePos.x = Mathf.Clamp(mousePos.x, -6.5f, 6.5f);
-        mousePos.y = Mathf.Clamp(mousePos.y, -1.5f, 0.85f);
+		mousePos.x = Mathf.Clamp(mousePos.x, -6.5f, 6.5f);
+		mousePos.y = Mathf.Clamp(mousePos.y, -1.5f, 0.85f);
 
-        transform.up = -(new Vector2(0f - mousePos.x, -20f - mousePos.y).normalized);
+		transform.up = -(new Vector2(0f - mousePos.x, -20f - mousePos.y).normalized);
 
 		Vector3 pos = mousePos;
 

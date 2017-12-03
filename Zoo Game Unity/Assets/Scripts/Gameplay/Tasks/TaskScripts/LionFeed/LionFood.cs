@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class LionFood : GenericClickableObject {
 
-	public TaskLionFeed task;
 
 	public override void OnClick(bool fromDown){
 		if(fromDown){
-			task.MarkTaskAsDone();
+			TaskManager.self.GetComponent<TaskLionFeed>().MarkTaskAsDone();
 			gameObject.SetActive(false);
 		}
 	}
