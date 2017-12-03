@@ -60,7 +60,6 @@ public class GoatTower : MonoBehaviour {
 		SetTowerGoatPositions();
 
 		if(goatsInTower.Count == 0){
-			TaskManager.self.GetComponent<TaskGoatEscape>().MarkTaskAsDone();
 			SceneManager.LoadScene("Overworld");
 		}
 	}

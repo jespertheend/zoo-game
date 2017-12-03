@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TaskListUI : MonoBehaviour {
 
 	public RectTransform listRect;
+	public RectTransform contentRect;
 	public float animationSpeed = 1f;
 	public Color textColor;
 	public Color textColorDone;
@@ -45,11 +46,11 @@ public class TaskListUI : MonoBehaviour {
 
 		float t = animationTime;
 		float w = listRect.sizeDelta.x;
-		listRect.anchoredPosition = Vector2.left * (t * w - w);
+		listRect.anchoredPosition = new Vector2(-1f, 1f) * (t * w - w);
 	}
 
 	public void SetTexts(){
-		foreach(Transform child in listRect){
+		foreach(Transform child in contentRect){
 			Destroy(child.gameObject);
 		}
 		foreach(string item in TaskManager.self.GetTaskStrings()){
@@ -59,15 +60,16 @@ public class TaskListUI : MonoBehaviour {
 				itemText = itemText.Substring(0, itemText.Length - 6);
 			}
 			GameObject spawned = new GameObject("list item");
-			spawned.transform.parent = listRect;
+			spawned.transform.parent = contentRect;
 			RectTransform rect = spawned.AddComponent<RectTransform>();
 			rect.sizeDelta = new Vector2(0f, 50f);
+			rect.localRotation = Quaternion.identity;
 			spawned.transform.localScale = Vector3.one;
 			Text text = spawned.AddComponent<Text>();
 			text.text = itemText;
 			text.color = done ? textColorDone : textColor;
-			text.resizeTextForBestFit = true;
 			text.font = font;
+			text.fontSize = 12;
 			text.supportRichText = true;
 		}
 		TaskManager.self.ClearOldTasks();

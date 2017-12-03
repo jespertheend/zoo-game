@@ -9,15 +9,11 @@ public class TaskManager : MonoBehaviour {
 	public List<Task> currentTasks = new List<Task>();
 
 	public float taskSpawnRate = 30f;
-	float spawnTimer;
+	float spawnTimer = Mathf.Infinity;
 
 	static public TaskManager self;
 	void Awake(){
 		self = this;
-	}
-
-	void Start(){
-		SpawnTask();
 	}
 
 	void Update(){
@@ -30,7 +26,6 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	public void SpawnTask(){
-		TaskListUI.self.SetTexts();
 		Task newTask = null;
 		List<Task> availableTasks = new List<Task>();
 		foreach(Task task in tasks){
@@ -58,6 +53,7 @@ public class TaskManager : MonoBehaviour {
 			if(obj != null){
 				GenericTask taskScript = obj.GetComponent<GenericTask>();
 				if(taskScript != null){
+					TaskListUI.self.SetTexts();
 					taskScript.OnTaskCreated();
 					currentTasks.Add(newTask);
 					spawnTimer = 0f;
