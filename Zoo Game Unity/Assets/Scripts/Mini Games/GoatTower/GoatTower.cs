@@ -14,7 +14,6 @@ public class GoatTower : MonoBehaviour {
 			return goatsInTower.Count;
 		}
 	}
-	bool finishedMinigame = false;
 	List<GoatTowerGoat> goatsInTower = new List<GoatTowerGoat>();
 	List<GoatTowerGoat> spawnedGoats = new List<GoatTowerGoat>();
 
@@ -32,7 +31,7 @@ public class GoatTower : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Time.time - lastSpawnTime > spawnFrequency && !finishedMinigame){
+		if(Time.time - lastSpawnTime > spawnFrequency){
 			SpawnGoat();
 		}
 	}
@@ -62,17 +61,8 @@ public class GoatTower : MonoBehaviour {
 
 		if(goatsInTower.Count == 0){
 			TaskManager.self.GetComponent<TaskGoatEscape>().MarkTaskAsDone();
-			finishedMinigame = true;
-			foreach(GoatTowerGoat goatScript in spawnedGoats){
-				Destroy(goatScript);
-			}
-			StartCoroutine(ToOverworld());
+			SceneManager.LoadScene("Overworld");
 		}
-	}
-
-	IEnumerator ToOverworld(){
-		yield return new WaitForSeconds(1f);
-		SceneManager.LoadScene("Overworld");
 	}
 
 	void SetTowerGoatPositions(){

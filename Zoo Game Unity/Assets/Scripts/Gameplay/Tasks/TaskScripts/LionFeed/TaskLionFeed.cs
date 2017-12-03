@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TaskLionFeed : GenericTask {
 
-	public GameObject foodObject;
+	// public GameObject foodObject;
 
 	public override void OnTaskCreated(){
-		foodObject.SetActive(true);
+		// foodObject.SetActive(true);
 	}
 }
