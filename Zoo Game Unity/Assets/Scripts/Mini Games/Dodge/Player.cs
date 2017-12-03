@@ -45,7 +45,6 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if (goal < 0f)
 		{
-			TaskManager.self.GetComponent<TaskMonkeyShit>().MarkTaskAsDone();
 			SceneManager.LoadScene("Overworld");
 		}
 
